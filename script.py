@@ -102,6 +102,14 @@ def save_translations():
         # close translation file
         f.close()
 
+# saves files with translated words and adds their synonyms to the file
+def save_synonyms_of_translations():
+    return
+
+# saves the universal words across translation files
+def save_universal():
+    return
+
 mcw_limit = 10
 syn_limit = 3
 
@@ -111,6 +119,7 @@ to_lang = 'en-US'
 mcws_path = 'mcws/'
 syn_path = 'synonyms/'
 transl_path = 'translations/'
+transl_with_syns_path = 'translations_with_synonyms/'
 
 # save_mcws()
 # save_synonyms()
