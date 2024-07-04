@@ -55,7 +55,7 @@ def save_synonyms():
         for mcw in mcws:
             syns = dict.synonym(from_lang, mcw)[:syn_limit]
             print(from_lang, disp_progress(count, total), 'saving synonyms of', '\'' + mcw +'\':', ', '.join(syns))
-            f.write(mcw + ' ' + ' '.join(syns).lower() + '\n')
+            f.write(mcw + ';' + ';'.join(syns).lower() + '\n')
             count += 1
         f.close()
 
@@ -106,6 +106,6 @@ mcws_path = 'mcws/'
 syn_path = 'synonyms/'
 transl_path = 'translations/'
 
-# save_mcws()
-# save_synonyms()
-save_translations()
+save_mcws()
+save_synonyms()
+# save_translations()

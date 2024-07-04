@@ -1,10 +1,10 @@
-die 
-der derjenige dieser ebendieser
-und aber außerdem daneben
-in aktuell an angesagt
-das 
-ich meinesteils unsereiner unsereins
-ist 
-nicht keinesfalls keineswegs mitnichten
-zu à allzu an
-den 
+die;
+der;derjenige;dieser;ebendieser
+und;aber;außerdem;daneben
+in;aktuell;an;angesagt
+das;
+ich;meinesteils;unsereiner;unsereins
+ist;
+nicht;keinesfalls;keineswegs;mitnichten
+zu;à;allzu;an
+den;
