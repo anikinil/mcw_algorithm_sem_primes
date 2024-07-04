@@ -102,6 +102,9 @@ mcws_path = 'mcws/'
 syn_path = 'synonyms/'
 transl_path = 'translations/'
 
-save_mcws()
-save_synonyms()
-# save_translations()
+# save_mcws()
+# save_synonyms()
+save_translations()
+
+
+# TODO think about using antonyms too
