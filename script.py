@@ -41,13 +41,6 @@ def save_synonyms():
 
         # open cleared syn file
         f = open(syn_path + from_lang + '.txt', 'a')
-        # clear syn file
-        f = open(syn_path + from_lang + '.txt', 'w')
-        f.write('')
-        f.close()
-
-        # open cleared syn file
-        f = open(syn_path + from_lang + '.txt', 'a')
 
         # for each mcw append mcw + its synonyms to syn file (in lower case)
         count = 1
@@ -55,7 +48,10 @@ def save_synonyms():
         for mcw in mcws:
             syns = dict.synonym(from_lang, mcw)[:syn_limit]
             print(from_lang, disp_progress(count, total), 'saving synonyms of', '\'' + mcw +'\':', ', '.join(syns))
-            f.write(mcw + ';' + ';'.join(syns).lower() + '\n')
+            write_str = mcw
+            # if no syns, only append '\n' to mcw, else append syns + '\n'
+            write_str += ';' + ';'.join(syns).lower() + '\n' if syns != [] else '\n'
+            f.write(write_str)
             count += 1
         f.close()
 
@@ -80,7 +76,7 @@ def save_translations():
         # if words are not already in desired language
         if from_lang != to_lang:
             # split words and syns into a 2D array
-            word_groups = [g.split(' ') for g in source_file_as_str.split('\n')]
+            word_groups = [g.split(';') for g in source_file_as_str.split('\n')]
             # translate each word in each group and save row wise in translation file (in lower case)
             for group in word_groups:
                 group_translations = []
@@ -88,7 +84,7 @@ def save_translations():
                     translation = dict.translate(from_lang, word, to_lang)
                     translated_word = [w for (l, w) in translation if l == to_lang][0].lower()
                     group_translations.append(translated_word)
-                f.write(' '.join(group_translations) + '\n')
+                f.write(';'.join(group_translations) + '\n')
         # if words are already in desired language, just write the whole source string into the trainslation file
         else:
             f.write(source_file_as_str)
