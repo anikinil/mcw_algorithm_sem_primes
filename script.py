@@ -47,12 +47,14 @@ def save_synonyms():
         count = 1
         total = len(mcws)
         for mcw in mcws:
-            syns = dict.synonym(from_lang, mcw)[:syn_limit]
+            syns = dict.synonym(from_lang[:2], mcw)[:syn_limit]
             print(from_lang, disp_progress(count, total), 'saving synonyms of', '\'' + mcw +'\':', ', '.join(syns))
             write_str = mcw
             # if no syns, only append '\n' to mcw, else append syns + '\n'
-            write_str += ';' + ';'.join(syns).lower() + '\n' if syns != [] else '\n'
+            write_str += ';' + ';'.join(syns).lower() if syns != [] else ''
             f.write(write_str)
+            # only append \n when not on the last word
+            if count != total: f.write('\n')
             count += 1
         f.close()
 
@@ -86,12 +88,13 @@ def save_translations():
                 for word in group:
                     translated = MyMemoryTranslator(source=from_lang, target=to_lang).translate(word).lower()
                     print(from_lang, disp_progress(count, total), 'translating', '\'' + word + '\'' + ':', translated)
-                    # print(translation)
                     # translation = dict.translate(from_lang, word, to_lang)
                     # translated_word = [w for (l, w) in translation if l == to_lang][0].lower()
                     group_translations.append(translated)
                     count += 1
-                f.write(';'.join(group_translations) + '\n')
+                f.write(';'.join(group_translations))
+                # only append \n when not on the last word group
+                if count <= total: f.write('\n')
         # if words are already in desired language, just write the whole source string into the trainslation file
         else:
             f.write(source_file_as_str)
@@ -114,4 +117,5 @@ transl_path = 'translations/'
 save_translations()
 
 
-# TODO think about using antonyms too
+# TODO maybe use antonyms too
+# TODO maybe remove punctuation from translations

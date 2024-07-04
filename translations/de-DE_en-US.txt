@@ -8,4 +8,3 @@ actual
 not;under no circumstances;the clause is not applicable ?;certainly not.
 at;à;all too;on
 enters
-
