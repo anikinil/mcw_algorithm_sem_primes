@@ -1,5 +1,6 @@
 from wordfreq import top_n_list, zipf_frequency
-from PyMultiDictionary import MultiDictionary, DICT_EDUCALINGO
+from PyMultiDictionary import MultiDictionary
+from deep_translator import MyMemoryTranslator
 
 # define dictionary
 dict = MultiDictionary()
@@ -78,12 +79,18 @@ def save_translations():
             # split words and syns into a 2D array
             word_groups = [g.split(';') for g in source_file_as_str.split('\n')]
             # translate each word in each group and save row wise in translation file (in lower case)
+            count = 1
+            total = sum(len(row) for row in word_groups)
             for group in word_groups:
                 group_translations = []
                 for word in group:
-                    translation = dict.translate(from_lang, word, to_lang)
-                    translated_word = [w for (l, w) in translation if l == to_lang][0].lower()
-                    group_translations.append(translated_word)
+                    translated = MyMemoryTranslator(source=from_lang, target=to_lang).translate(word).lower()
+                    print(from_lang, disp_progress(count, total), 'translating', '\'' + word + '\'' + ':', translated)
+                    # print(translation)
+                    # translation = dict.translate(from_lang, word, to_lang)
+                    # translated_word = [w for (l, w) in translation if l == to_lang][0].lower()
+                    group_translations.append(translated)
+                    count += 1
                 f.write(';'.join(group_translations) + '\n')
         # if words are already in desired language, just write the whole source string into the trainslation file
         else:
@@ -95,8 +102,8 @@ def save_translations():
 mcw_limit = 10
 syn_limit = 3
 
-from_langs = ['en', 'de', 'ru']
-to_lang = 'en'
+from_langs = ['en-US', 'de-DE', 'ru-RU']
+to_lang = 'en-US'
 
 mcws_path = 'mcws/'
 syn_path = 'synonyms/'
